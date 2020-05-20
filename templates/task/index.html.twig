@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block taskLi %}
+    <li class="nav-item active">
+{% endblock %}
+
+{% block main %}
+    <div class="container mgt">
+        <div class="col-lg-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="no-margin">Zadania {{ language }}</h2>
+                </header>
+                <ul class="list-group list-group-flush">
+                    {% for task in tasks %}
+                        <li class="list-group-item">
+                            <div class="task-data">
+                                <div class="task-content">{{ task.description | raw }}</div>
+                                <div class="task-button">
+                                    <button type="button" class="btn btn-secondary showSolution" data-task-id="{{ task.id }}">
+                                        Pokaż rozwiązanie
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="hidden task-solution" data-task-id="{{ task.id }}">
+                                {{ task.solution | raw }}
+                            </div>
+                        </li>
+                    {% else %}
+                        <li>Brak zadań</li>
+                    {% endfor %}
+                </ul>
+                <footer class="card-footer">
+                    {{- pagination_render(paginator, 'pagination/paginator.html.twig') -}}
+                </footer>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ absolute_url(asset('engine.js')) }}"></script>
+{% endblock %}

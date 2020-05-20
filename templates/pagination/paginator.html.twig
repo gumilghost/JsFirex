@@ -1,0 +1,37 @@
+{% if pagination.total > 1 %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination" style="margin: 0;">
+            {% if pagination.prev %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ pagination.prev.link }}" title="Poprzednia strona">
+                        <i class="icon-left-open-mini"></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for item in pagination %}
+                {% if item.current %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="{{ item.link }}" title="{{ 'pagination.current_page.title'|trans }}">
+                            {{ 'pagination.current_page.word'|trans({'%page%': item.page}) }} <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ item.link }}" title="{{ 'pagination.page_number.title'|trans({'%page%': item.page}) }}">
+                            {{ 'pagination.page_number.word'|trans({'%page%': item.page}) }}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if pagination.next %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ pagination.next.link }}" title="Następna strona">
+                        <i class="icon-right-open-mini"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}

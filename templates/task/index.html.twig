@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             <div class="hidden task-solution" data-task-id="{{ task.id }}">
-                                {{ task.solution }}
+                                {{ task.solution | escape | nl2br }}
                             </div>
                         </li>
                     {% else %}

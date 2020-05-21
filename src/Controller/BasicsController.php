@@ -37,6 +37,7 @@ class BasicsController extends AbstractController
                 'links' => [],
                 'paginator' => null,
                 'error' => $e->getMessage(),
+                'count' => 0
             ]);
         }
 
@@ -51,6 +52,7 @@ class BasicsController extends AbstractController
                 $this->getParameter('resultsPerPage')
             ),
             'paginator' => $pagination,
+            'totalLinks' => $totalLinks
         ]);
     }
 }

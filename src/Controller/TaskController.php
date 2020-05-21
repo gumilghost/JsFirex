@@ -36,7 +36,8 @@ class TaskController extends AbstractController
                 'language' => $language,
                 'tasks', [],
                 'paginator' => null,
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
+                'totalTasks' => ''
             ]);
         }
 
@@ -50,7 +51,8 @@ class TaskController extends AbstractController
                 $page,
                 $this->getParameter('resultsPerPage')
             ),
-            'paginator' => $pagination
+            'paginator' => $pagination,
+            'totalTasks' => $totalTasks
         ]);
     }
 }

@@ -30,9 +30,11 @@
                         <li>Brak zadań</li>
                     {% endfor %}
                 </ul>
+                {% if totalTasks > resultsPerPage %}
                 <footer class="card-footer">
                     {{- pagination_render(paginator, 'pagination/paginator.html.twig') -}}
                 </footer>
+                {% endif %}
             </div>
         </div>
     </div>

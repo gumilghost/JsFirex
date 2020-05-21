@@ -11,6 +11,7 @@
                 <header class="card-header">
                     <h2 class="no-margin">Podstawy {{ language }}</h2>
                 </header>
+
                 <ul class="list-group list-group-flush">
                     {% for link in links %}
                         <li class="list-group-item">
@@ -20,9 +21,12 @@
                         <li>Brak linków</li>
                     {% endfor %}
                 </ul>
+
+                {% if totalLinks > resultsPerPage %}
                 <footer class="card-footer">
                     {{- pagination_render(paginator, 'pagination/paginator.html.twig') -}}
                 </footer>
+                {% endif %}
             </div>
         </div>
     </div>

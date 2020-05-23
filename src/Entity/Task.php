@@ -18,7 +18,7 @@ class Task
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -33,7 +33,7 @@ class Task
     private $solution;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      */
     private $language;
 
@@ -41,6 +41,27 @@ class Task
      * @ORM\Column(type="integer")
      */
     private $difficulty;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     */
+    public function setLanguage(Language $language): void
+    {
+        $this->language = $language;
+    }
 
     /**
      * @return mixed
@@ -56,23 +77,6 @@ class Task
     public function setDifficulty($difficulty): void
     {
         $this->difficulty = $difficulty;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param mixed $language
-     */
-    public function setLanguage(string $language): void
-    {
-        $this->language = $language;
     }
 
     public function getId(): ?int

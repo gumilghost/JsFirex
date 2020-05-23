@@ -1,0 +1,11 @@
+easy_admin:
+  entities:
+    - App\Entity\Link
+    - App\Entity\Task
+    - App\Entity\Language
+    - App\Entity\Author
+    - App\Entity\Course
+    - App\Entity\CourseReference
+  user:
+    display_name: true
+    display_avatar: false

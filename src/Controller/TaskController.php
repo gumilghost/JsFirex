@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Language;
 use App\Repository\TaskRepository;
 use GpsLab\Bundle\PaginationBundle\Service\Configuration;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,17 +19,18 @@ class TaskController extends AbstractController
      *     methods={"get"},
      *     requirements={"page"="\d+", "language"="(JavaScript)"}
      *     )
+     * @Entity("language", expr="repository.getLanguageByName(language)")
      * @param Configuration $pagination
      * @param TaskRepository $taskRepository
      * @param int $page
-     * @param string $language
+     * @param Language $language
      * @return Response
      */
     public function index(
         Configuration $pagination,
         TaskRepository $taskRepository,
-        int $page = 1,
-        string $language = 'JavaScript'
+        Language $language,
+        int $page = 1
     ): Response {
         try {
             $totalTasks = $taskRepository->getTotalLanguageTasks($language);

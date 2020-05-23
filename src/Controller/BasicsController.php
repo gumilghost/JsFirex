@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Language;
 use App\Repository\LinkRepository;
 use GpsLab\Bundle\PaginationBundle\Service\Configuration;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,8 +15,8 @@ class BasicsController extends AbstractController
     /**
      * @param Configuration $pagination
      * @param LinkRepository $linkRepository
+     * @param Language $language
      * @param int $page
-     * @param string $language
      * @return Response
      * @Route(
      *     "/basics/{language}/{page}",
@@ -22,11 +24,12 @@ class BasicsController extends AbstractController
      *     name="basics",
      *     requirements={"page"="\d+", "language"="(JavaScript)"}
      *     )
+     * @Entity("language", expr="repository.getLanguageByName(language)")
      */
     public function showBasics(
         Configuration $pagination,
         LinkRepository $linkRepository,
-        string $language,
+        Language $language,
         int $page = 1
     ): Response {
         try {

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Link;
 use App\Repository\LinkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -19,7 +18,7 @@ class DefaultController extends AbstractController
     public function index(LinkRepository $linkRepository): Response
     {
         try {
-            $link = $linkRepository->getRandomLink(Link::LANGUAGE_RANDOM);
+            $link = $linkRepository->getRandomLink();
         } catch (\Exception $e) {
             return $this->render('default/home.html.twig', [
                 'link' => ['reference' => '', 'title' => ''],

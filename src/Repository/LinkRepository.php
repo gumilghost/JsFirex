@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Language;
 use App\Entity\Link;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -22,12 +23,12 @@ class LinkRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $language
+     * @param Language $language
      * @param int $page
      * @param int $resultsPerPage
      * @return array
      */
-    public function getLanguageLinks(string $language, int $page, int $resultsPerPage): array
+    public function getLanguageLinks(Language $language, int $page, int $resultsPerPage): array
     {
         $qb = $this->createQueryBuilder('l');
         $query = $qb
@@ -42,12 +43,12 @@ class LinkRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $language
+     * @param Language $language
      * @return int
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function getTotalLanguageLinks(string $language): int
+    public function getTotalLanguageLinks(Language $language): int
     {
         $qb = $this->createQueryBuilder('l');
         $query = $qb
@@ -59,13 +60,17 @@ class LinkRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $language
+     * @param Language $language
      * @return Link
      * @throws NonUniqueResultException
      */
-    public function getRandomLink(string $language = ''): Link
+    public function getRandomLink(?Language $language = null): ?Link
     {
         $identifiers = $this->getLinksId($language);
+        if (!$identifiers) {
+            return null;
+        }
+
         $qb = $this->createQueryBuilder('l');
         $query = $qb
             ->where('l.id = :ID')
@@ -83,10 +88,10 @@ class LinkRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string $language
+     * @param Language $language
      * @return array
      */
-    public function getLinksId(string $language = ''): array
+    public function getLinksId(?Language $language = null): array
     {
         $qb = $this->createQueryBuilder('l');
         $query = $qb->select('l.id');

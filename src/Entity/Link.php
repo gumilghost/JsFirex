@@ -10,10 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Link
 {
-    const LANGUAGE_RANDOM = '';
-    const LANGUAGE_JS = 'JavaScript';
-    const LANGUAGE_PHP = 'PHP';
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -22,7 +18,7 @@ class Link
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $reference;
 
@@ -37,14 +33,19 @@ class Link
     private $created;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      */
     private $language;
+
+    public function __construct()
+    {
+        $this->created = new \DateTime();
+    }
 
     /**
      * @return mixed
      */
-    public function getLanguage()
+    public function getLanguage(): ?Language
     {
         return $this->language;
     }
@@ -52,10 +53,11 @@ class Link
     /**
      * @param mixed $language
      */
-    public function setLanguage(string $language): void
+    public function setLanguage(Language $language): void
     {
         $this->language = $language;
     }
+
 
     public function getId(): ?int
     {

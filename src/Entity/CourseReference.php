@@ -27,6 +27,11 @@ class CourseReference
      */
     private $name;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Course")
+     */
+    private $course;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,5 +62,15 @@ class CourseReference
     public function __toString(): string
     {
         return $this->name;
+    }
+
+    public function getCourse(): ?Course
+    {
+        return $this->course;
+    }
+
+    public function setCourse(Course $course): void
+    {
+        $this->course = $course;
     }
 }

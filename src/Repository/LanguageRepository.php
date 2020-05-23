@@ -27,4 +27,11 @@ class LanguageRepository extends ServiceEntityRepository
     {
         return $this->findOneBy(['name' => $name]);
     }
+
+    public function getLanguagesAsArray(): array
+    {
+        $qb = $this->createQueryBuilder('l');
+        $result = $qb->select('l.name')->getQuery()->getArrayResult();
+        return array_column($result, 'name');
+    }
 }

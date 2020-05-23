@@ -17,7 +17,7 @@ class TaskController extends AbstractController
      *     "/{language}/tasks/{page}",
      *     name="tasks",
      *     methods={"get"},
-     *     requirements={"page"="\d+", "language"="(JavaScript)"}
+     *     requirements={"page"="\d+"}
      *     )
      * @Entity("language", expr="repository.getLanguageByName(language)")
      * @param Configuration $pagination
@@ -35,12 +35,8 @@ class TaskController extends AbstractController
         try {
             $totalTasks = $taskRepository->getTotalLanguageTasks($language);
         } catch (\Exception $e) {
-            return $this->render('task/index.html.twig', [
-                'language' => $language,
-                'tasks', [],
-                'paginator' => null,
+            return $this->render('other/internal-error.html.twig', [
                 'error' => $e->getMessage(),
-                'totalTasks' => ''
             ]);
         }
 

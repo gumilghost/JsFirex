@@ -85,4 +85,9 @@ class Course
     {
         return $this->references;
     }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 }

@@ -48,9 +48,11 @@
                         Podstawy
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ absolute_url(path('basics', { "language": "JavaScript", "page": 1 })) }}">
-                            JavaScript
-                        </a>
+                        {% for lang in languages %}
+                            <a class="dropdown-item" href="{{ absolute_url(path('basics', { "language": lang, "page": 1 })) }}">
+                                {{ lang }}
+                            </a>
+                        {% endfor  %}
                     </div>
                 </li>
 
@@ -61,9 +63,11 @@
                         Zadania
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ absolute_url(path('tasks', {"language":"JavaScript","page": 1})) }}">
-                            JavaScript
-                        </a>
+                        {% for lang in languages %}
+                            <a class="dropdown-item" href="{{ absolute_url(path('tasks', { "language": lang, "page": 1 })) }}">
+                                {{ lang }}
+                            </a>
+                        {% endfor  %}
                     </div>
                 </li>
 

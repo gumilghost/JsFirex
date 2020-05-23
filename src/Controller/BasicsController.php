@@ -22,7 +22,7 @@ class BasicsController extends AbstractController
      *     "/basics/{language}/{page}",
      *     methods={"get"},
      *     name="basics",
-     *     requirements={"page"="\d+", "language"="(JavaScript)"}
+     *     requirements={"page"="\d+"}
      *     )
      * @Entity("language", expr="repository.getLanguageByName(language)")
      */
@@ -35,12 +35,8 @@ class BasicsController extends AbstractController
         try {
             $totalLinks = $linkRepository->getTotalLanguageLinks($language);
         } catch (\Exception $e) {
-            return $this->render('basics/index.html.twig', [
-                'language' => $language,
-                'links' => [],
-                'paginator' => null,
+            return $this->render('other/internal-error.html.twig', [
                 'error' => $e->getMessage(),
-                'count' => 0
             ]);
         }
 

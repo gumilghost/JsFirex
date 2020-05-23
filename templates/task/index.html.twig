@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block taskLi %}
-    <li class="nav-item active">
+    <li class="nav-item active dropdown">
 {% endblock %}
 
 {% block main %}
@@ -27,7 +27,7 @@
                             </div>
                         </li>
                     {% else %}
-                        <li>Brak zadań</li>
+                        <li class="list-group-item">Brak zadań</li>
                     {% endfor %}
                 </ul>
                 {% if totalTasks > resultsPerPage %}

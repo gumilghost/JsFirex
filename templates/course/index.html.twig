@@ -5,11 +5,11 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container">
+    <div class="container mgt">
         <div class="col-lg-12">
             <h2>Lista kursów</h2>
         </div>
-        <div class="col-lg-12">
+        <div class="col-lg-12 mgt">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -17,16 +17,31 @@
                         <th>Autor kursu</th>
                         <th>Język</th>
                         <th>Nazwa</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
-
+                {% for course in courses %}
+                    <th>{{ ((page * resultsPerPage) - resultsPerPage) + 1 }}</th>
+                    <td>{{ course.author }}</td>
+                    <td>{{ course.language }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>
+                        <a href="{{ absolute_url(path('course', {"id": course.id, "page": 1})) }}" class="btn btn-primary">
+                            Przejdź
+                        </a>
+                    </td>
+                {% else %}
+                    <td colspan="5" class="text-center">Brak kursów</td>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
-        <nav class="col-lg-12">
-
-        </nav>
+        <div class="col-lg-12">
+        {% if totalCourses > resultsPerPage %}
+            {{- pagination_render(paginator, 'pagination/paginator.html.twig') -}}
+        {% endif %}
+        </div>
     </div>
     
     <section class="container">

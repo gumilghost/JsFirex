@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <article class="container mgt">
+        <div class="col-lg-12">
+            <h2>{{ course.name }}</h2>
+            <small>Autor: {{ course.author }}</small>
+        </div>
+        <div class="col-lg-12 mgt">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nazwa odcinka</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for reference in course.references %}
+                    <tr>
+                        <th>{{ ((resultsPerPage * page) - resultsPerPage) + 1 }}</th>
+                        <td>{{ reference.name }}</td>
+                        <td>
+                            <a target="_blank" href="{{ reference.reference }}" class="btn btn-primary">
+                                Przejdź
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Do tego kursu nie dodano linków</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <footer class="col-lg-12">
+            {% if totalReferences > resultsPerPage %}
+                {{- pagination_render(paginator, 'pagination/paginator.html.twig') -}}
+            {% endif %}
+        </footer>
+    </article>
+{% endblock %}

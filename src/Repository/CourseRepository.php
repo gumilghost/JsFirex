@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Language;
 use App\Entity\Course;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +20,41 @@ class CourseRepository extends ServiceEntityRepository
         parent::__construct($registry, Course::class);
     }
 
-    // /**
-    //  * @return Course[] Returns an array of Course objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $page
+     * @param int $resultsPerPage
+     * @return array
+     */
+    public function getCourses(int $page, int $resultsPerPage): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $qb = $this->createQueryBuilder('c');
+        $query = $qb
+            ->setFirstResult(($page * $resultsPerPage) - $resultsPerPage)
+            ->setMaxResults($resultsPerPage)
+            ->orderBy('c.author', 'asc')
+            ->getQuery();
 
-    /*
-    public function findOneBySomeField($value): ?Course
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $query->getResult();
     }
-    */
+
+    /**
+     * @param Language|null $language
+     * @return int
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getTotalCourses(?Language $language): int
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $query = $qb->select('COUNT(c.id)');
+
+        if ($language) {
+            $query = $query
+                ->where('c.language = :LANGUAGE')
+                ->setParameter('LANGUAGE', $language);
+        }
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
 }

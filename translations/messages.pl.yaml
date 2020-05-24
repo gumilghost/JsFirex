@@ -1,0 +1,28 @@
+Link: Link
+Task: Zadanie
+Language: Język
+Author: Autor
+Course: Kurs
+CourseReference: Link do kursu
+ID: Identyfikator
+Title: Tytuł
+Created: Utworzono
+Reference: Odnośnik
+Year: Rok
+Month: Miesiąc
+Day: Dzień
+Hour: Godzina
+Minute: Minuta
+Difficulty: Trudność
+Description: Opis
+Solution: Rozwiązanie
+Name: Nazwa
+Courses: Kursy
+References: Odnośniki
+pagination:
+  current_page:
+    word: '%page%'
+    title: 'Obecna strona'
+  page_number:
+    title: 'Przejdź do strony %page%'
+    word: '%page%'

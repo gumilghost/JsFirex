@@ -1,4 +1,7 @@
 easy_admin:
+  site_name: 'Panel Administracyjny'
+  design:
+    brand_color: '#03bcff'
   entities:
     - App\Entity\Link
     - App\Entity\Task

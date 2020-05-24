@@ -47,34 +47,22 @@ class Task
         $this->created = new \DateTime();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLanguage()
+    public function getLanguage(): ?Language
     {
         return $this->language;
     }
 
-    /**
-     * @param mixed $language
-     */
     public function setLanguage(Language $language): void
     {
         $this->language = $language;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDifficulty()
+    public function getDifficulty(): ?int
     {
         return $this->difficulty;
     }
 
-    /**
-     * @param mixed $difficulty
-     */
-    public function setDifficulty($difficulty): void
+    public function setDifficulty(int $difficulty): void
     {
         $this->difficulty = $difficulty;
     }

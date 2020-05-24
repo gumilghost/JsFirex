@@ -42,22 +42,20 @@ class Link
         $this->created = new \DateTime();
     }
 
-    /**
-     * @return mixed
-     */
+    public function __toString(): string
+    {
+        return $this->title;
+    }
+
     public function getLanguage(): ?Language
     {
         return $this->language;
     }
 
-    /**
-     * @param mixed $language
-     */
     public function setLanguage(Language $language): void
     {
         $this->language = $language;
     }
-
 
     public function getId(): ?int
     {

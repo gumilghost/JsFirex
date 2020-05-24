@@ -22,7 +22,7 @@
                 <tbody>
                 {% for reference in course.references %}
                     <tr>
-                        <th>{{ ((resultsPerPage * page) - resultsPerPage) + 1 }}</th>
+                        <th>{{ ((page * resultsPerPage) - resultsPerPage) + loop.index }}</th>
                         <td>{{ reference.name }}</td>
                         <td>
                             <a target="_blank" href="{{ reference.reference }}" class="btn btn-primary">

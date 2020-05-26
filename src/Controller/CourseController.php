@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Course;
 use App\Repository\CourseReferenceRepository;
+use App\Service\PaginationHelper;
 use GpsLab\Bundle\PaginationBundle\Service\Configuration;
 use App\Repository\CourseRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,11 +17,16 @@ class CourseController extends AbstractController
      * @Route("/courses/{page}", name="courses", requirements={"page"="/d+"})
      * @param Configuration $pagination
      * @param CourseRepository $courseRepository
+     * @param PaginationHelper $paginationHelper
      * @param int $page
      * @return Response
      */
-    public function index(Configuration $pagination, CourseRepository $courseRepository, int $page = 1): Response
-    {
+    public function index(
+        Configuration $pagination,
+        CourseRepository $courseRepository,
+        PaginationHelper $paginationHelper,
+        int $page = 1
+    ): Response  {
         try {
             $totalCourses = $courseRepository->getTotalCourses(null);
         } catch (\Exception $e) {
@@ -31,7 +37,7 @@ class CourseController extends AbstractController
 
         $courses = $courseRepository->getCourses($page, $this->getParameter('resultsPerPage'));
 
-        $pagination->setTotalPages(ceil($totalCourses / $this->getParameter('resultsPerPage')));
+        $pagination->setTotalPages($paginationHelper->calculateTotalPages($totalCourses));
         $pagination->setCurrentPage($page);
 
         return $this->render('course/index.html.twig', [
@@ -46,14 +52,18 @@ class CourseController extends AbstractController
      * @param CourseReferenceRepository $courseReferenceRepository
      * @param Configuration $pagination
      * @param Course $course
+     * @param PaginationHelper $paginationHelper
+     * @param int $id
      * @param int $page
      * @return Response
-     * @Route("/course/{id}/page/{page}", methods={"get"}, name="course", requirements={"page"="/d+"})
+     * @Route("/course/{id}/page/{page}", methods={"get"}, name="course", requirements={"page"="\d+"})
      */
     public function displayCourse(
         CourseReferenceRepository $courseReferenceRepository,
         Configuration $pagination,
         Course $course,
+        PaginationHelper $paginationHelper,
+        int $id,
         int $page = 1
     ): Response {
         try {
@@ -64,11 +74,19 @@ class CourseController extends AbstractController
             ]);
         }
 
-        $pagination->setTotalPages(ceil($totalReferences / $this->getParameter('resultsPerPage')));
+        $pagination->setTotalPages($paginationHelper->calculateTotalPages($totalReferences));
         $pagination->setCurrentPage($page);
+        $pagination->setPageLink(fn (int $page) => sprintf("/course/%d/page/%d", $id, $page));
+
+        $courseReferences = $course->getReferences()->slice(
+            $paginationHelper->calculateOffset($page),
+            $this->getParameter('resultsPerPage')
+        );
 
         return $this->render('course/course.html.twig', [
+            'totalPages' => $paginationHelper->calculateTotalPages($totalReferences),
             'course' => $course,
+            'courseReferences' => $courseReferences,
             'page' => $page,
             'paginator' => $pagination,
             'totalReferences' => $totalReferences,

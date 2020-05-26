@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Language;
 use App\Repository\LinkRepository;
+use App\Service\PaginationHelper;
 use GpsLab\Bundle\PaginationBundle\Service\Configuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +17,7 @@ class BasicsController extends AbstractController
      * @param Configuration $pagination
      * @param LinkRepository $linkRepository
      * @param Language $language
+     * @param PaginationHelper $paginationHelper
      * @param int $page
      * @return Response
      * @Route(
@@ -30,6 +32,7 @@ class BasicsController extends AbstractController
         Configuration $pagination,
         LinkRepository $linkRepository,
         Language $language,
+        PaginationHelper $paginationHelper,
         int $page = 1
     ): Response {
         try {
@@ -40,7 +43,7 @@ class BasicsController extends AbstractController
             ]);
         }
 
-        $pagination->setTotalPages(ceil($totalLinks / $this->getParameter('resultsPerPage')));
+        $pagination->setTotalPages($paginationHelper->calculateTotalPages($totalLinks));
         $pagination->setCurrentPage($page);
 
         return $this->render('basics/index.html.twig', [

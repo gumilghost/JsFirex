@@ -15,32 +15,32 @@ class Task
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $description;
+    private ?string $description = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created;
+    private ?\DateTimeInterface $created;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $solution;
+    private ?string $solution = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      */
-    private $language;
+    private ?Language $language = null;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $difficulty;
+    private ?int $difficulty = null;
 
     public function __construct()
     {

@@ -16,23 +16,23 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username = "";
+    private ?string $username = null;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private ?array $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
+    private ?string $password = null;
 
     public function getId(): ?int
     {

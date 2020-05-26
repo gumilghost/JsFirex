@@ -20,7 +20,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for reference in course.references %}
+                {% for reference in courseReferences %}
                     <tr>
                         <th>{{ ((page * resultsPerPage) - resultsPerPage) + loop.index }}</th>
                         <td>{{ reference.name }}</td>

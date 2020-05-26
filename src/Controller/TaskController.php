@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Language;
 use App\Repository\TaskRepository;
+use App\Service\PaginationHelper;
 use GpsLab\Bundle\PaginationBundle\Service\Configuration;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,14 +23,16 @@ class TaskController extends AbstractController
      * @Entity("language", expr="repository.getLanguageByName(language)")
      * @param Configuration $pagination
      * @param TaskRepository $taskRepository
-     * @param int $page
      * @param Language $language
+     * @param PaginationHelper $paginationHelper
+     * @param int $page
      * @return Response
      */
     public function index(
         Configuration $pagination,
         TaskRepository $taskRepository,
         Language $language,
+        PaginationHelper $paginationHelper,
         int $page = 1
     ): Response {
         try {
@@ -40,7 +43,7 @@ class TaskController extends AbstractController
             ]);
         }
 
-        $pagination->setTotalPages(ceil($totalTasks / $this->getParameter('resultsPerPage')));
+        $pagination->setTotalPages($paginationHelper->calculateTotalPages($totalTasks));
         $pagination->setCurrentPage($page);
 
         return $this->render('task/index.html.twig', [

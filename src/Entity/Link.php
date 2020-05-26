@@ -15,27 +15,27 @@ class Link
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $reference;
+    private ?string $reference = null;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private ?string $title = null;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $created;
+    private ?\DateTimeInterface $created;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      */
-    private $language;
+    private ?Language $language = null;
 
     public function __construct()
     {

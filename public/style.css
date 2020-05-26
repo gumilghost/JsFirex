@@ -3,16 +3,23 @@ body { min-height: 100vh; display: flex; flex-direction: column; }
 .footer
 {
     margin-top: auto;
-    min-height: 4rem;
-    background-color: #eceff1;
-
-    display: flex;
-    align-items: center
 }
 .footer-text
 {
     margin: 0;
 }
+.fu2
+{
+    background-color: #eceff1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 4rem;
+    margin-top: 1rem;
+}
+
 
 .no-margin { margin: 0; }
 .mgt { margin-top: 1rem; }

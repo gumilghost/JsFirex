@@ -15,22 +15,22 @@ class CourseReference
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $reference;
+    private ?string $reference = null;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Course")
      */
-    private $course;
+    private ?Course $course = null;
 
     public function getId(): ?int
     {
@@ -59,7 +59,7 @@ class CourseReference
         $this->name = $name;
     }
 
-    public function __toString(): string
+    public function __toString(): ?string
     {
         return $this->name;
     }

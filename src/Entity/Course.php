@@ -17,27 +17,27 @@ class Course
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $name;
+    private ?string $name = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="courses")
      */
-    private $author;
+    private ?Author $author = null;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\CourseReference")
      */
-    private $references;
+    private ?Collection $references;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Language")
      */
-    private $language;
+    private ?Language $language = null;
 
     public function __construct()
     {
